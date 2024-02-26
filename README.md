@@ -1,7 +1,6 @@
+# shop_back
 
-## Description
-
-
+This project was generated with [Nest](https://nestjs.com)
 
 ## Installation
 
