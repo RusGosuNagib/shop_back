@@ -1,28 +1,25 @@
 import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
 
 @Entity()
-export class Product {
+export class Products {
   @PrimaryKey()
-  id: number;
+  id!: number;
 
-  @Property()
-  type: string;
+  @Property({ nullable: true })
+  title?: string;
 
-  @Property()
-  title: string;
+  @Property({ columnType: 'smallint' })
+  type?: number;
 
-  @Property()
-  photo: string;
+  @Property({ columnType: 'text', nullable: true })
+  photo?: string;
 
-  @Property()
-  info: string;
+  @Property({ columnType: 'text', nullable: true })
+  info?: string;
 
-  @Property()
-  price: string;
+  @Property({ columnType: 'numeric(7,2)' })
+  price?: string;
 
-  @Property()
-  date: string;
-
-  @Property()
-  product: object;
+  @Property({ columnType: 'date' })
+  date?: string;
 }
