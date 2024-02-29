@@ -1,6 +1,7 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
+import { Entity, PrimaryKey, Property, wrap } from '@mikro-orm/core';
+import { ProductRepository } from './product.repository';
 
-@Entity()
+@Entity({ repository: () => ProductRepository })
 export class Products {
   @PrimaryKey()
   id!: number;
@@ -20,6 +21,31 @@ export class Products {
   @Property({ columnType: 'numeric(7,2)' })
   price?: string;
 
-  @Property({ columnType: 'date' })
-  date?: string;
+  @Property()
+  date: Date = new Date();
+
+  constructor(
+    title: string,
+    type: number,
+    photo: string,
+    info: string,
+    price: string,
+  ) {
+    this.title = title;
+    this.type = type;
+    this.photo = photo;
+    this.info = info;
+    this.price = price;
+  }
+
+  toJSON() {
+    return wrap<Products>(this).toObject() as ProductDto;
+  }
+}
+export interface ProductDto {
+  title: string;
+  type: number;
+  photo: string;
+  info: string;
+  price: string;
 }
