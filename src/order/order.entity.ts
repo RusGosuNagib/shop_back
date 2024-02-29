@@ -1,6 +1,10 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
+import { Entity, ManyToOne, PrimaryKey, Property, wrap } from '@mikro-orm/core';
+// import { Products } from '../product/product.entity';
+import { OrderDto } from './DTO/order.dto';
+import { OrderRepository } from './order.repository';
+import { Products } from '../product/product.entity';
 
-@Entity()
+@Entity({ repository: () => OrderRepository })
 export class Orders {
   @PrimaryKey()
   id!: number;
@@ -23,9 +27,13 @@ export class Orders {
   @Property({ columnType: 'numeric(100,2)' })
   price?: string;
 
-  @Property({ columnType: 'date' })
-  date?: string;
-
   @Property()
-  products?: string[];
+  date: Date = new Date();
+
+  @ManyToOne()
+  products: Products[];
+
+  toJSON() {
+    return wrap<Orders>(this).toObject() as OrderDto;
+  }
 }

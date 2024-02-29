@@ -1,5 +1,6 @@
 import { Entity, PrimaryKey, Property, wrap } from '@mikro-orm/core';
 import { ProductRepository } from './product.repository';
+import { ProductDto } from './DTO/product.dto';
 
 @Entity({ repository: () => ProductRepository })
 export class Products {
@@ -41,11 +42,4 @@ export class Products {
   toJSON() {
     return wrap<Products>(this).toObject() as ProductDto;
   }
-}
-export interface ProductDto {
-  title: string;
-  type: number;
-  photo: string;
-  info: string;
-  price: string;
 }

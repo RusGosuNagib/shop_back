@@ -3,7 +3,7 @@ import { EntityManager, EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Products } from './product.entity';
 import { CreateProductDto } from './DTO';
-import { ProductDto } from './product.entity';
+import { ProductDto } from './DTO/product.dto';
 
 @Injectable()
 export class ProductService {
@@ -29,5 +29,42 @@ export class ProductService {
 
     await this.entityManager.persistAndFlush(product);
     return product.toJSON();
+  }
+
+  async removeProduct(id): Promise<boolean> {
+    const product = await this.productRepository.findOne(id);
+    if (!product) {
+      return false;
+    }
+    await this.entityManager.removeAndFlush(product);
+    return true;
+  }
+
+  async updateProduct(
+    productDto: CreateProductDto,
+    id: number,
+  ): Promise<ProductDto> {
+    const product = await this.productRepository.findOne(id);
+    if (!product) {
+      return null;
+    }
+    product.title = productDto.title;
+    product.type = productDto.type;
+    product.photo = productDto.photo;
+    product.info = productDto.info;
+    product.price = productDto.price;
+    await this.entityManager.persistAndFlush(product);
+    return product.toJSON();
+  }
+
+  async findById(id: number): Promise<ProductDto> {
+    const product = await this.productRepository.findOne(id);
+    if (!product) {
+      return null;
+    }
+    return product.toJSON();
+  }
+  async findByIds(ids: number[]): Promise<Products[]> {
+    return await this.productRepository.find(ids);
   }
 }
