@@ -47,6 +47,8 @@ export class OrderController {
   }
 
   /**
+   * not used
+   *
    * Update an order by ID
    * @param id - The ID of the order to update
    * @param updateOrderDto - The data to update the order with
@@ -54,8 +56,8 @@ export class OrderController {
    */
   @Put(':id')
   async updateOrder(@Param('id') id: number, @Body() updateOrderDto: OrderDto) {
+    return false;
     const ids = updateOrderDto.products.map((product) => product.id);
     return await this.productService.findByIds(ids);
-    // return await this.orderService.updateOrder(id, updateOrderDto);
   }
 }

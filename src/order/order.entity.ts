@@ -1,17 +1,14 @@
 import {
   Collection,
-  Entity, ManyToMany,
-  ManyToOne,
-  OneToMany,
+  Entity,
+  ManyToMany,
   PrimaryKey,
   Property,
   wrap,
 } from '@mikro-orm/core';
-// import { Products } from '../product/product.entity';
 import { OrderDto } from './DTO/order.dto';
 import { OrderRepository } from './order.repository';
 import { Products } from '../product/product.entity';
-import { ProductDto } from '../product/DTO/product.dto';
 
 @Entity({ repository: () => OrderRepository })
 export class Orders {
@@ -21,14 +18,12 @@ export class Orders {
     address: string,
     paymentType: number,
     price: string,
-    // products: Products[],
   ) {
     this.name = name;
     this.phone = phone;
     this.address = address;
     this.paymentType = paymentType;
     this.price = price;
-    // this.products = products;
   }
   @PrimaryKey()
   id!: number;
