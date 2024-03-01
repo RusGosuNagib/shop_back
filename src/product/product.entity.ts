@@ -1,6 +1,7 @@
 import { Entity, PrimaryKey, Property, wrap } from '@mikro-orm/core';
 import { ProductRepository } from './product.repository';
 import { ProductDto } from './DTO/product.dto';
+import { OrderDto } from '../order/DTO/order.dto';
 
 @Entity({ repository: () => ProductRepository })
 export class Products {

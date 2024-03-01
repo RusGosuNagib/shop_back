@@ -1,4 +1,5 @@
 import { ProductDto } from 'src/product/DTO/product.dto';
+import { Products } from '../../product/product.entity';
 export class OrderDto {
   readonly id: number;
   readonly name: string;
@@ -7,5 +8,5 @@ export class OrderDto {
   readonly paymentType: number;
   readonly price: string;
   readonly date: Date;
-  readonly products: ProductDto[];
+  products: Products[];
 }
