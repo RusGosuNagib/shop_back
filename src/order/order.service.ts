@@ -50,8 +50,8 @@ export class OrderService {
         "info": "<p><sdfsfdsdf",
         "price": "5000.00",
         "id": +'2',
-      }
-    ]
+      },
+    ];
     const order = new Orders(
       createOrderDto.name,
       createOrderDto.phone,
