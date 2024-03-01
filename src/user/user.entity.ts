@@ -2,6 +2,20 @@ import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
 
 @Entity()
 export class Users {
+  constructor(
+    email: string,
+    password: string,
+    role: number,
+    expiresIn: number,
+    secureToken: string,
+  ) {
+    this.email = email;
+    this.password = password;
+    this.expiresIn = expiresIn;
+    this.secureToken = secureToken;
+    this.role = 0;
+  }
+
   @PrimaryKey()
   id!: number;
 
@@ -11,14 +25,8 @@ export class Users {
   @Property({ columnType: 'text', nullable: true })
   password?: string;
 
-  @Property({ fieldName: 'returnSecureToken', nullable: true })
-  returnSecureToken?: boolean;
-
   @Property({ fieldName: 'expiresIn', nullable: true })
   expiresIn?: number;
-
-  @Property({ fieldName: 'idToken', nullable: true })
-  idToken?: string;
 
   @Property({ fieldName: 'secureToken', nullable: true })
   secureToken?: string;
