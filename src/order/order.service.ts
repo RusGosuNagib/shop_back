@@ -31,40 +31,43 @@ export class OrderService {
   //   return order;
   // }
   async createOrder(createOrderDto: OrderDto): Promise<void> {
-    // const products: Products[] = await this.productRepository.find({
-    //   id: {
-    //     $in: createOrderDto.products.map((product: Products) => product.id),
-    //   },
-    // });
-    const products = await this.productRepository.findAll();
+    const products: Products[] = await this.productRepository.find({
+      id: {
+        $in: createOrderDto.products.map((product: Products) => product.id),
+      },
+    });
+    // const products = await this.productRepository.findAll();
 
     if (!products) {
       throw new Error('Products not found');
     }
-    const prods = products.map((product) => product.toJSON());
-    const p2: ProductDto[] = [
-      {
-        "title": "Обувь",
-        "type": +"3",
-        "photo": "hoto",
-        "info": "<p><sdfsfdsdf",
-        "price": "5000.00",
-        "id": +'2',
-      },
-    ];
+    // const prods = products.map((product) => product.toJSON());
+    // const p2: ProductDto[] = [
+    //   {
+    //     title: 'Обувь',
+    //     type: +'3',
+    //     photo: 'hoto',
+    //     info: '<p><sdfsfdsdf',
+    //     price: '5000.00',
+    //     id: +'2',
+    //   },
+    // ];
     const order = new Orders(
       createOrderDto.name,
       createOrderDto.phone,
       createOrderDto.address,
       createOrderDto.paymentType,
       createOrderDto.price,
-      p2,
     );
-console.log(p2)
+    order.products.add(products);
+    // console.log(p2);
     return await this.entityManager.persistAndFlush(order);
   }
   async getAllOrders(): Promise<OrderDto[]> {
-    const orders = await this.orderRepository.findAll();
+    const orders = await this.orderRepository.findAll({
+      populate: ['products'],
+    });
+    if (!orders) return [];
     return orders.map((order) => order.toJSON());
   }
 

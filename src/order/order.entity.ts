@@ -1,4 +1,12 @@
-import { Entity, ManyToOne, PrimaryKey, Property, wrap } from '@mikro-orm/core';
+import {
+  Collection,
+  Entity, ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryKey,
+  Property,
+  wrap,
+} from '@mikro-orm/core';
 // import { Products } from '../product/product.entity';
 import { OrderDto } from './DTO/order.dto';
 import { OrderRepository } from './order.repository';
@@ -13,14 +21,14 @@ export class Orders {
     address: string,
     paymentType: number,
     price: string,
-    products: ProductDto[],
+    // products: Products[],
   ) {
     this.name = name;
     this.phone = phone;
     this.address = address;
     this.paymentType = paymentType;
     this.price = price;
-    this.products = products;
+    // this.products = products;
   }
   @PrimaryKey()
   id!: number;
@@ -46,15 +54,15 @@ export class Orders {
   @Property()
   date: Date = new Date();
 
-  @Property()
-  products: ProductDto[];
+  @ManyToMany(() => Products, (product) => product.orders)
+  products = new Collection<Products>(this);
 
   toJSON() {
-    return wrap<Orders>(this).toObject() as OrderDto;
+    return wrap<Orders>(this).toObject() as unknown as OrderDto;
   }
 
   toStr() {
-    const data = wrap<Orders>(this).toObject() as OrderDto;
+    const data = wrap<Orders>(this).toObject() as unknown as OrderDto;
     return JSON.stringify(data);
   }
 }

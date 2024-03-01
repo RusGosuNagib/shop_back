@@ -1,7 +1,16 @@
-import { Entity, PrimaryKey, Property, wrap } from '@mikro-orm/core';
+import {
+  Collection,
+  Entity, ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryKey,
+  Property,
+  wrap,
+} from '@mikro-orm/core';
 import { ProductRepository } from './product.repository';
 import { ProductDto } from './DTO/product.dto';
 import { OrderDto } from '../order/DTO/order.dto';
+import { Orders } from '../order/order.entity';
 
 @Entity({ repository: () => ProductRepository })
 export class Products {
@@ -25,6 +34,11 @@ export class Products {
 
   @Property()
   date: Date = new Date();
+
+  @ManyToMany({
+    hidden: true,
+  })
+  orders = new Collection<Orders>(this);
 
   constructor(
     title: string,
