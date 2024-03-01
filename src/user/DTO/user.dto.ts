@@ -5,4 +5,5 @@ export class UserDto {
   readonly expiresIn: number;
   readonly secureToken: string;
   readonly role: number;
+  readonly secureTokenExpDate: string;
 }

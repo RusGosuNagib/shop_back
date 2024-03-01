@@ -31,6 +31,7 @@ export class UserService {
       0,
       7200,
       secureToken,
+      null,
     );
 
     await this.entityManager.persistAndFlush(user);
@@ -50,11 +51,48 @@ export class UserService {
     if (!user) {
       return false;
     }
+    await this.isUserAuthorized(user);
+
     return {
       email: user.email,
       expiresIn: user.expiresIn,
       secureToken: user.secureToken,
       role: user.role,
+      secureTokenExpDate: user.secureTokenExpDate,
     };
+  }
+
+  async isUserAuthorized(user: Users): Promise<boolean> {
+    const dateNow = new Date(Date.now()).getTime();
+    const secureTokenExpDateTime = new Date(user.secureTokenExpDate).getTime();
+
+    const needUpdateSecureToken = !(
+      new Date(secureTokenExpDateTime).getTime() - new Date(dateNow).getTime() >
+      0
+    );
+    if (needUpdateSecureToken) {
+      await this.generateNewToken(user);
+    }
+    const findUser = await this.userRepository.findOne({
+      email: { $eq: user.email },
+    });
+
+    return !!findUser;
+  }
+
+  async generateNewToken(user: Users): Promise<Users | boolean> {
+    if (!user) {
+      return false;
+    }
+    user.secureToken = CryptoFunctions.generateSecureToken();
+    user.secureTokenExpDate = new Date(Date.now() + 7200 * 1000);
+
+    await this.entityManager.persistAndFlush(user);
+    return user;
+  }
+
+  async validateToken(token: string): Promise<boolean> {
+    const user = await this.userRepository.findOne({ secureToken: token });
+    return !!user;
   }
 }

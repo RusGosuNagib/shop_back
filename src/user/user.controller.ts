@@ -23,6 +23,7 @@ export class UserController {
     userData: {
       email: string;
       password: string;
+      secureToken: string;
     },
   ): Promise<CreateUserDto | boolean> {
     return this.userService.authenticateUser(userData.email, userData.password);
