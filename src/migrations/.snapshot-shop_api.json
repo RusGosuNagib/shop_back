@@ -42,8 +42,8 @@
           "nullable": true,
           "mappedType": "string"
         },
-        "paymentType": {
-          "name": "paymentType",
+        "payment_type": {
+          "name": "payment_type",
           "type": "smallint",
           "unsigned": false,
           "autoincrement": false,
@@ -274,17 +274,8 @@
           "nullable": true,
           "mappedType": "text"
         },
-        "returnSecureToken": {
-          "name": "returnSecureToken",
-          "type": "boolean",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "mappedType": "boolean"
-        },
-        "expiresIn": {
-          "name": "expiresIn",
+        "expires_in": {
+          "name": "expires_in",
           "type": "int",
           "unsigned": false,
           "autoincrement": false,
@@ -292,17 +283,8 @@
           "nullable": true,
           "mappedType": "integer"
         },
-        "idToken": {
-          "name": "idToken",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "mappedType": "string"
-        },
-        "secureToken": {
-          "name": "secureToken",
+        "secure_token": {
+          "name": "secure_token",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
@@ -317,7 +299,18 @@
           "autoincrement": false,
           "primary": false,
           "nullable": true,
+          "default": "0",
           "mappedType": "smallint"
+        },
+        "secure_token_exp_date": {
+          "name": "secure_token_exp_date",
+          "type": "timestamptz",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 6,
+          "mappedType": "datetime"
         }
       },
       "name": "users",
