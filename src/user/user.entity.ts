@@ -17,7 +17,7 @@ export class Users {
     this.role = 0;
     this.expiresIn = expiresIn;
     this.secureToken = secureToken;
-    this.secureTokenExpDate = new Date(Date.now() + expiresIn * 1000);
+    this.secureTokenExpDate = new Date(new Date().getTime() + expiresIn * 1000);
   }
 
   @PrimaryKey()
