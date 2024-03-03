@@ -30,15 +30,15 @@ export class ProductController {
 
   /**
    * @param createProductDto
-   * @param key
+   * @param secureToken
    * @returns Product
    */
   @Post()
   async create(
     @Body() createProductDto: CreateProductDto,
-    @Headers('key') key: string,
+    @Headers('secure_token') secureToken: string,
   ) {
-    if (await this.userService.validateToken(key)) {
+    if (await this.userService.validateToken(secureToken)) {
       return await this.productService.create(createProductDto);
     }
     return false;
@@ -48,23 +48,23 @@ export class ProductController {
    * @param id
    */
   @Get(':id')
-  async findById(@Param() id: number): Promise<ProductDto> {
+  async findById(@Param() id: number): Promise<ProductDto | boolean> {
     return await this.productService.findById(id);
   }
 
   /**
    * @param id
    * @param createProductDto
-   * @param key
+   * @param secureToken
    * @returns Product
    */
   @Put(':id')
   async updateProduct(
     @Param() id: number,
     @Body() createProductDto: CreateProductDto,
-    @Headers('key') key: string,
+    @Headers('secure_token') secureToken: string,
   ): Promise<ProductDto | boolean> {
-    if (await this.userService.validateToken(key)) {
+    if (await this.userService.validateToken(secureToken)) {
       return await this.productService.updateProduct(createProductDto, id);
     }
     return false;
@@ -72,15 +72,15 @@ export class ProductController {
 
   /**
    * @param id
-   * @param key
+   * @param secureToken
    * @returns bool
    */
   @Delete(':id')
   async remove(
     @Param() id: number,
-    @Headers('key') key: string,
+    @Headers('secure_token') secureToken: string,
   ): Promise<boolean> {
-    if (await this.userService.validateToken(key)) {
+    if (await this.userService.validateToken(secureToken)) {
       return await this.productService.removeProduct(id);
     }
     return false;

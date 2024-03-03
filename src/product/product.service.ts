@@ -43,10 +43,10 @@ export class ProductService {
   async updateProduct(
     productDto: CreateProductDto,
     id: number,
-  ): Promise<ProductDto> {
+  ): Promise<ProductDto | boolean> {
     const product = await this.productRepository.findOne(id);
     if (!product) {
-      return null;
+      return false;
     }
     product.title = productDto.title;
     product.type = productDto.type;
@@ -57,10 +57,10 @@ export class ProductService {
     return product.toJSON();
   }
 
-  async findById(id: number): Promise<ProductDto> {
+  async findById(id: number): Promise<ProductDto | boolean> {
     const product = await this.productRepository.findOne(id);
     if (!product) {
-      return null;
+      return false;
     }
     return product.toJSON();
   }

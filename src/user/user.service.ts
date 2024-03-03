@@ -67,7 +67,8 @@ export class UserService {
     const secureTokenExpDateTime = new Date(user.secureTokenExpDate).getTime();
 
     const needUpdateSecureToken = !(
-      new Date(secureTokenExpDateTime).getTime() - new Date(dateNow).getTime() >
+      new Date(secureTokenExpDateTime).getTime() -
+        new Date(dateNow).getTime() <=
       0
     );
     if (needUpdateSecureToken) {

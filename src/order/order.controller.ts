@@ -36,10 +36,10 @@ export class OrderController {
    */
   @Get()
   async getAllOrders(
-    @Headers('key')
-    key: string,
+    @Headers('secure_token')
+    secureToken: string,
   ) {
-    if (await this.userService.validateToken(key)) {
+    if (await this.userService.validateToken(secureToken)) {
       return await this.orderService.getAllOrders();
     }
     return false;
@@ -47,18 +47,18 @@ export class OrderController {
 
   /**
    * Remove an order by ID
-   * @param key
+   * @param secureToken
    * @param id - The ID of the order to remove
    * @returns A boolean indicating if the order was successfully removed
    */
   @Delete(':id')
   async removeOrder(
     @Param('id')
-    @Headers('key')
-    key: string,
+    @Headers('secure_token')
+    secureToken: string,
     id: number,
   ) {
-    if (await this.userService.validateToken(key)) {
+    if (await this.userService.validateToken(secureToken)) {
       return await this.orderService.removeOrder(id);
     }
     return false;
@@ -70,18 +70,18 @@ export class OrderController {
    * Update an order by ID
    * @param id - The ID of the order to update
    * @param updateOrderDto - The data to update the order with
-   * @param key
+   * @param secureToken
    * @returns The updated order
    */
   @Put(':id')
   async updateOrder(
     @Param('id') id: number,
     @Body() updateOrderDto: OrderDto,
-    @Headers('key')
-    key: string,
+    @Headers('secure_token')
+    secureToken: string,
   ) {
     return false;
-    if (await this.userService.validateToken(key)) {
+    if (await this.userService.validateToken(secureToken)) {
       return await this.orderService.updateOrder(id, updateOrderDto);
     }
     return false;
