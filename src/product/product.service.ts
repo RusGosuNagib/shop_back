@@ -33,7 +33,6 @@ export class ProductService {
   }
 
   async removeProduct(id): Promise<boolean> {
-    console.log('jhvjvjhhjvvjjvjvjvhhjv', id);
     const product = await this.productRepository.findOne(id);
     if (!product) {
       return false;

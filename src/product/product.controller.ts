@@ -64,7 +64,6 @@ export class ProductController {
     @Body() createProductDto: CreateProductDto,
     @Headers('secure_token') secureToken: string,
   ): Promise<ProductDto | boolean> {
-    console.log(createProductDto);
     if (await this.userService.validateToken(secureToken)) {
       return await this.productService.updateProduct(createProductDto, id);
     }
@@ -82,7 +81,6 @@ export class ProductController {
     @Headers('secure_token') secureToken: string,
   ): Promise<boolean> {
     if (await this.userService.validateToken(secureToken)) {
-      console.log('id jhvhjvvjhjv' + id);
       return await this.productService.removeProduct(id);
     }
     return false;
