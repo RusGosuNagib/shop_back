@@ -18,6 +18,7 @@ export class ProductService {
 
     return products.map((product) => product.toJSON());
   }
+
   async create(productDto: CreateProductDto): Promise<ProductDto> {
     const product = new Products(
       productDto.title,
@@ -32,6 +33,7 @@ export class ProductService {
   }
 
   async removeProduct(id): Promise<boolean> {
+    console.log('jhvjvjhhjvvjjvjvjvhhjv', id);
     const product = await this.productRepository.findOne(id);
     if (!product) {
       return false;

@@ -45,6 +45,7 @@ export class OrderService {
   }
 
   async removeOrder(id: number): Promise<boolean> {
+    console.log('[p[p[p[p[p[p[p[p]', id);
     const order = await this.orderRepository.findOne(id);
     if (!order) {
       return false;

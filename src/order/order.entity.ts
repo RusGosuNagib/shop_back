@@ -38,7 +38,7 @@ export class Orders {
   address?: string;
 
   @Property({
-    fieldName: 'paymentType',
+    fieldName: 'payment_type',
     columnType: 'smallint',
   })
   paymentType?: number;

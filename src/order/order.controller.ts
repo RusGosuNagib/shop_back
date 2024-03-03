@@ -54,9 +54,9 @@ export class OrderController {
   @Delete(':id')
   async removeOrder(
     @Param('id')
+    id: number,
     @Headers('secure_token')
     secureToken: string,
-    id: number,
   ) {
     if (await this.userService.validateToken(secureToken)) {
       return await this.orderService.removeOrder(id);

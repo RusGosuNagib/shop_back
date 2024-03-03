@@ -93,7 +93,7 @@ export class UserService {
   }
 
   async validateToken(token: string): Promise<boolean> {
-    const user = await this.userRepository.findOne({ secureToken: token });
+    const user = await this.userRepository.find({ secureToken: token });
     return !!user;
   }
 }

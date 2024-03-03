@@ -5,8 +5,8 @@ import {
   Get,
   Param,
   Post,
-  Put,
   Headers,
+  Patch,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './DTO';
@@ -58,12 +58,13 @@ export class ProductController {
    * @param secureToken
    * @returns Product
    */
-  @Put(':id')
+  @Patch(':id')
   async updateProduct(
     @Param() id: number,
     @Body() createProductDto: CreateProductDto,
     @Headers('secure_token') secureToken: string,
   ): Promise<ProductDto | boolean> {
+    console.log(createProductDto);
     if (await this.userService.validateToken(secureToken)) {
       return await this.productService.updateProduct(createProductDto, id);
     }
@@ -81,6 +82,7 @@ export class ProductController {
     @Headers('secure_token') secureToken: string,
   ): Promise<boolean> {
     if (await this.userService.validateToken(secureToken)) {
+      console.log('id jhvhjvvjhjv' + id);
       return await this.productService.removeProduct(id);
     }
     return false;
