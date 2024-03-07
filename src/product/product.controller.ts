@@ -7,6 +7,7 @@ import {
   Post,
   Headers,
   Patch,
+  Query,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './DTO';
@@ -47,7 +48,7 @@ export class ProductController {
   /**
    * @param id
    */
-  @Get(':id')
+  @Get('find/:id')
   async findById(@Param() id: number): Promise<ProductDto | boolean> {
     return await this.productService.findById(id);
   }
@@ -84,5 +85,13 @@ export class ProductController {
       return await this.productService.removeProduct(id);
     }
     return false;
+  }
+  @Get('/paginate')
+  async getPaginateProducts(
+    @Query('type') type: number,
+    @Query('limit') limit: number,
+    @Query('offset') offset: number,
+  ) {
+    return await this.productService.findPaginate(type, limit, offset);
   }
 }

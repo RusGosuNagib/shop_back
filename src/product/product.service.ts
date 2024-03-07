@@ -68,4 +68,20 @@ export class ProductService {
   async findByIds(ids: number[]): Promise<Products[]> {
     return await this.productRepository.find(ids);
   }
+  async findPaginate(
+    type: number,
+    limit: number,
+    offset: number,
+  ): Promise<ProductDto[]> {
+    const products = await this.productRepository.find(
+      { type: type },
+      {
+        populate: false,
+        orderBy: { title: 'asc' },
+        limit: limit,
+        offset: offset,
+      },
+    );
+    return products.map((product) => product.toJSON());
+  }
 }
