@@ -73,15 +73,14 @@ export class ProductService {
     limit: number,
     offset: number,
   ): Promise<ProductDto[]> {
-    const products = await this.productRepository.find(
-      { type: type },
-      {
-        populate: false,
-        orderBy: { title: 'asc' },
-        limit: limit,
-        offset: offset,
-      },
-    );
+    const query = type !== 99 ? {} : { type: type };
+    const products = await this.productRepository.find(query, {
+      populate: false,
+      orderBy: { title: 'asc' },
+      limit: limit,
+      offset: offset,
+    });
+
     return products.map((product) => product.toJSON());
   }
 }
